@@ -28,19 +28,7 @@ $(document).ready(function(){
 </head>
 <body>
 <div id="web_bg" style="position:absolute; width:100%; height:40%; z-index:-1"  >
-<img style="position:fixed;" src="${webRoot}/images/error.png" height="100%" width="100%" />
-</div>
-<div>
-<span id="togid" ><button type="button" class="btn btn-primary btn-lg">异常信息 显示/隐藏</button></span>
-<div id="errordiv" style="display:none">
-<% Exception e = (Exception)request.getAttribute("ex"); %>
-<H2>错误异常: <%= e.getClass().getSimpleName()%></H2>
-<hr />
-<P>错误描述：</P>
-<%= e.getMessage()%>
-<P>错误信息：</P>
-<% e.printStackTrace(new java.io.PrintWriter(out)); %>
-</div>
+<img style="position:fixed;" src="${webRoot}/images/404.png" height="100%" width="100%" />
 </div>
 </body>
 </html>
