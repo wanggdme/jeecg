@@ -89,10 +89,13 @@ public class RoletoJson {
 				sufStr = (String)PropertyUtils.getProperty(object, sufFieldName);
 			} catch (InvocationTargetException e) {
 				e.printStackTrace();
+				throw new RuntimeException(e);
 			} catch (NoSuchMethodException e) {
 				e.printStackTrace();
+				throw new RuntimeException(e);
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
+				throw new RuntimeException(e);
 			}
 			strList.add(perStr + "_" +sufStr);
 		}
