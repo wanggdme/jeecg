@@ -122,7 +122,7 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
 		//response.setContentType("application/json");
 		response.setHeader("Cache-Control", "no-store");
 		AjaxJson json = new AjaxJson();
-		json.setSuccess(true);
+		json.setSuccess(false);
 		json.setMsg(deepestException.getMessage());
 		PrintWriter pw = null;
 		try {
