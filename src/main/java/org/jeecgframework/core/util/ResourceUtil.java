@@ -70,14 +70,14 @@ public class ResourceUtil {
 		HttpSession session = ContextHolderUtils.getSession();
 		if(ClientManager.getInstance().getClient(session.getId())!=null){
 			return ClientManager.getInstance().getClient(session.getId()).getUser();
-		}else{
+		}/*else{
 			TSUser u = (TSUser) session.getAttribute(ResourceUtil.LOCAL_CLINET_USER);
 			Client client = new Client();
 	        client.setIp("");
 	        client.setLogindatetime(new Date());
 	        client.setUser(u);
 	        ClientManager.getInstance().addClinet(session.getId(), client);
-		}
+		}*/
 		return null;
 	}
 	@Deprecated

@@ -921,7 +921,6 @@ public class ListtoMenu {
 		if(map==null||map.size()==0||!map.containsKey(0)){return "不具有任何权限,\n请找管理员分配权限";}
 		StringBuffer menuString = new StringBuffer();
 		List<TSFunction> list = map.get(0);
-		int curIndex = 0;
 		for (TSFunction function : list) {
 			menuString.append("<li>");
 			if(function.getFunctionIconStyle()!=null&&!function.getFunctionIconStyle().trim().equals("")){
@@ -936,14 +935,11 @@ public class ListtoMenu {
 			menuString.append("</span>");
 			if(!function.hasSubFunction(map)){
 				menuString.append("</a></li>");
-				//menuString.append(getSubMenu(function,1,map));
 			}else{
-				//menuString.append("<b class=\"arrow icon-angle-down\"></b></a><ul  class=\"submenu\" >");
 				menuString.append("</a><ul  class=\"nav nav-second-level\" >");
 				menuString.append(getHplusSubMenu(function,1,map));
 				menuString.append("</ul></li>");
 			}
-			curIndex++;
 		}
 
 		return menuString.toString();

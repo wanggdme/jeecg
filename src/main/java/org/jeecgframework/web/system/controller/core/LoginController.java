@@ -104,14 +104,16 @@ public class LoginController extends BaseController{
 			j.setMsg(mutiLangService.getLang("common.verifycode.error"));
 			j.setSuccess(false);
 		} else {
-			//用户登录验证逻辑
+			//用户登录验证逻辑,根据用户名和密码查询用户信息
 			TSUser u = userService.checkUserExits(user);
 			if (u == null) {
 				j.setMsg(mutiLangService.getLang("common.username.or.password.error"));
 				j.setSuccess(false);
 				return j;
 			}
-			if (u != null && u.getStatus() != 0) {
+			
+			//如果用户存在,校验是否禁用了
+			if (u != null && u.getStatus() != 0) { //1：在线,2：离线,0：禁用
 				// 处理用户有多个组织机构的情况，以弹出框的形式让用户选择
 				Map<String, Object> attrMap = new HashMap<String, Object>();
 				j.setAttributes(attrMap);
@@ -128,6 +130,7 @@ public class LoginController extends BaseController{
 						saveLoginSuccessInfo(req, u, (String) userOrgMap.get("orgId"));
 					}
 				} else {
+					//说明用户是单部门用户
 					attrMap.put("orgNum", 1);
 					saveLoginSuccessInfo(req, u, orgId);
 				}
@@ -174,11 +177,13 @@ public class LoginController extends BaseController{
         user.setCurrentDepart(currentDepart);
 
         HttpSession session = ContextHolderUtils.getSession();
+        //把用户保存到session
         session.setAttribute(ResourceUtil.LOCAL_CLINET_USER, user);
         message = mutiLangService.getLang("common.user") + ": " + user.getUserName() + "["+ currentDepart.getDepartname() + "]" + mutiLangService.getLang("common.login.success");
 
         //当前session为空 或者 当前session的用户信息与刚输入的用户信息一致时，则更新Client信息
         Client clientOld = ClientManager.getInstance().getClient(session.getId());
+        
 		if(clientOld == null || clientOld.getUser() ==null ||user.getUserName().equals(clientOld.getUser().getUserName())){
 			Client client = new Client();
 	        client.setIp(IpUtil.getIpAddr(req));
@@ -210,6 +215,7 @@ public class LoginController extends BaseController{
 		TSUser user = ResourceUtil.getSessionUserName();
 		String roles = "";
 		if (user != null) {
+			//根据用户id查询用户的所有角色
 			List<TSRoleUser> rUsers = systemService.findByProperty(TSRoleUser.class, "TSUser.id", user.getId());
 			for (TSRoleUser ru : rUsers) {
 				TSRole role = ru.getTSRole();
@@ -219,17 +225,21 @@ public class LoginController extends BaseController{
 				roles = roles.substring(0, roles.length() - 1);
 			}
 			
+			//设置用户的角色名称
             modelMap.put("roleName", roles.length()>3?roles.substring(0,3)+"...":roles);
+            //设置用户名称
             modelMap.put("userName", user.getUserName().length()>5?user.getUserName().substring(0, 5)+"...":user.getUserName());
-
+            //设置当前部门名称
             modelMap.put("currentOrgName", ClientManager.getInstance().getClient().getUser().getCurrentDepart().getDepartname());
             request.getSession().setAttribute("CKFinder_UserRole", "admin");
-			
+            
+			//获取系统风格,如果cookie中没有，则获取默认值
 			SysThemesEnum sysTheme = SysThemesUtil.getSysTheme(request);
 			if("ace".equals(sysTheme.getStyle())||"diy".equals(sysTheme.getStyle())||"acele".equals(sysTheme.getStyle())||"hplus".equals(sysTheme.getStyle())){
 				request.setAttribute("menuMap", getFunctionMap(user));
 			}
 
+			//设置系统风格的cookie
 			Cookie cookie = new Cookie("JEECGINDEXSTYLE", sysTheme.getStyle());
 			//设置cookie有效期为一个月
 			cookie.setMaxAge(3600*24*30);
@@ -238,6 +248,7 @@ public class LoginController extends BaseController{
 			Cookie zIndexCookie = new Cookie("ZINDEXNUMBER", "1990");
 			zIndexCookie.setMaxAge(3600*24);//一天
 			response.addCookie(zIndexCookie);
+			//不同的系统风格，决定跳转到什么的首页列表
 			return sysTheme.getIndexPath();
 		} else {
 			return "login/login";
@@ -290,7 +301,7 @@ public class LoginController extends BaseController{
 	}
 
 	/**
-	 * 获取权限的map
+	 * 获取权限的map,获取用户菜单列表,去除掉了重复的菜单,按照菜单的等级分组菜单,对每组中的 菜单栏排序
 	 * 
 	 * @param user
 	 * @return
@@ -299,7 +310,10 @@ public class LoginController extends BaseController{
 		HttpSession session = ContextHolderUtils.getSession();
 		Client client = ClientManager.getInstance().getClient(session.getId());
 		if (client.getFunctionMap() == null || client.getFunctionMap().size() == 0) {
+			//按照菜单的等级分组菜单
 			Map<Integer, List<TSFunction>> functionMap = new HashMap<Integer, List<TSFunction>>();
+			
+			//获取用户菜单列表,去除掉了重复的菜单
 			Map<String, TSFunction> loginActionlist = getUserFunction(user);
 			if (loginActionlist.size() > 0) {
 				Collection<TSFunction> allFunctions = loginActionlist.values();
@@ -308,18 +322,20 @@ public class LoginController extends BaseController{
 						//如果为表单或者弹出 不显示在系统菜单里面
 						continue;
 					}
+		            
 					if (!functionMap.containsKey(function.getFunctionLevel() + 0)) {
-						functionMap.put(function.getFunctionLevel() + 0,
-								new ArrayList<TSFunction>());
+						functionMap.put(function.getFunctionLevel() + 0,new ArrayList<TSFunction>());
 					}
+					
 					functionMap.get(function.getFunctionLevel() + 0).add(function);
 				}
-				// 菜单栏排序
+				//对每组中的 菜单栏排序
 				Collection<List<TSFunction>> c = functionMap.values();
 				for (List<TSFunction> list : c) {
 					Collections.sort(list, new NumberComparator());
 				}
 			}
+			
 			client.setFunctionMap(functionMap);
 			//清空变量，降低内存使用
 			loginActionlist.clear();
@@ -330,7 +346,7 @@ public class LoginController extends BaseController{
 	}
 
 	/**
-	 * 获取用户菜单列表
+	 * 获取用户菜单列表,去除掉了重复的菜单
 	 * 
 	 * @param user
 	 * @return
@@ -338,39 +354,36 @@ public class LoginController extends BaseController{
 	private Map<String, TSFunction> getUserFunction(TSUser user) {
 		HttpSession session = ContextHolderUtils.getSession();
 		Client client = ClientManager.getInstance().getClient(session.getId());
-
 		if (client.getFunctions() == null || client.getFunctions().size() == 0) {
-			Map<String, TSFunction> loginActionlist = new HashMap<String, TSFunction>();
-			 /*String hql="from TSFunction t where t.id in  (select d.TSFunction.id from TSRoleFunction d where d.TSRole.id in(select t.TSRole.id from TSRoleUser t where t.TSUser.id ='"+
-	           user.getId()+"' ))";
-	           String hql2="from TSFunction t where t.id in  ( select b.tsRole.id from TSRoleOrg b where b.tsDepart.id in(select a.tsDepart.id from TSUserOrg a where a.tsUser.id='"+
-	           user.getId()+"'))";
-	           List<TSFunction> list = systemService.findHql(hql);
-	           log.info("role functions:  "+list.size());
-	           for(TSFunction function:list){
-	              loginActionlist.put(function.getId(),function);
-	           }
-	           List<TSFunction> list2 = systemService.findHql(hql2);
-	           log.info("org functions: "+list2.size());
-	           for(TSFunction function:list2){
-	              loginActionlist.put(function.getId(),function);
-	           }*/
-	           StringBuilder hqlsb1=new StringBuilder("select distinct f from TSFunction f,TSRoleFunction rf,TSRoleUser ru  ").append("where ru.TSRole.id=rf.TSRole.id and rf.TSFunction.id=f.id and ru.TSUser.id=? ");
-
+			   Map<String, TSFunction> loginActionlist = new HashMap<String, TSFunction>();
+			   
+			   //1. 根据用户id 通过 t_s_role_user 找到用户的角色， 
+			   //2. 再根据 角色id 在 t_s_role_function 找到对应的菜单id
+			   //3. 根据菜单id 在 t_s_function 找到对应的菜单信息
+	           StringBuilder hqlsb1=new StringBuilder("select distinct f from TSFunction f,TSRoleFunction rf,TSRoleUser ru  ")
+	        		   					.append("where ru.TSRole.id=rf.TSRole.id and rf.TSFunction.id=f.id and ru.TSUser.id=? ");
+	           
+	           //1. 根据用户id 通过 t_s_user_org 找到用户的部门id， 
+			   //2. 再根据 部门id 在 t_s_role_org 找到对应的角色信息
+			   //3. 根据角色id 在 t_s_role_function 找到对应的菜单id
+	           //4. 根据菜单id 在 t_s_function 找到对应的菜单信息
 	           StringBuilder hqlsb2=new StringBuilder("select distinct c from TSFunction c,TSRoleFunction rf,TSRoleOrg b,TSUserOrg a ")
 	           							.append("where a.tsDepart.id=b.tsDepart.id and b.tsRole.id=rf.TSRole.id and rf.TSFunction.id=c.id and a.tsUser.id=?");
+	           
 	           List<TSFunction> list1 = systemService.findHql(hqlsb1.toString(),user.getId());
 	           List<TSFunction> list2 = systemService.findHql(hqlsb2.toString(),user.getId());
+	           
+	           //把用户的菜单信息，保存在map中，key为菜单的id，这样可以去除重复的菜单
 	           for(TSFunction function:list1){
 		              loginActionlist.put(function.getId(),function);
 		       }
 	           for(TSFunction function:list2){
 		              loginActionlist.put(function.getId(),function);
 		       }
-            client.setFunctions(loginActionlist);
-            //清空变量，降低内存使用
-            list2.clear();
-            list1.clear();
+               client.setFunctions(loginActionlist);
+               //清空变量，降低内存使用
+               list2.clear();
+               list1.clear();
 		}
 		return client.getFunctions();
 	}
@@ -435,14 +448,6 @@ public class LoginController extends BaseController{
 	 */
 	@RequestMapping(params = "hplushome")
 	public ModelAndView hplushome(HttpServletRequest request) {
-
-		SysThemesEnum sysTheme = SysThemesUtil.getSysTheme(request);
-		//ACE ACE2 DIY时需要在home.jsp头部引入依赖的js及css文件
-		/*if("ace".equals(sysTheme.getStyle())||"diy".equals(sysTheme.getStyle())||"acele".equals(sysTheme.getStyle())){
-			request.setAttribute("show", "1");
-		} else {//default及shortcut不需要引入依赖文件，所有需要屏蔽
-			request.setAttribute("show", "0");
-		}*/
 		return new ModelAndView("main/hplushome");
 	}
 	/**

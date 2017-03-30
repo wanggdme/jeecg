@@ -47,16 +47,6 @@ public class MenuTag extends TagSupport {
 			out = this.pageContext.getOut();
 			out.print(end().toString());
 			out.flush();
-//			String menu = (String) this.pageContext.getSession().getAttribute("leftMenuCache"+style);
-//			if(menu!=null){
-//				out.print(menu);
-//				out.flush();
-//			}else{
-//				menu=end().toString();
-//				this.pageContext.getSession().setAttribute("leftMenuCache"+style,menu);
-//				out.print(menu);
-//				out.flush();
-//			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}finally{
@@ -75,33 +65,26 @@ public class MenuTag extends TagSupport {
             sb.append(ListtoMenu.getEasyuiMultistageTree(menuFun, style));
             sb.append("</ul>");
         }
-		if(style.equals("shortcut"))
-//		{	sb.append("<div id=\"nav\" style=\"display:none;\" class=\"easyui-accordion\" fit=\"true\" border=\"false\">");
-		{
+		if(style.equals("shortcut")){
             sb.append("<div id=\"nav\" style=\"display:block;\" class=\"easyui-accordion\" fit=\"true\" border=\"false\">");
 			sb.append(ListtoMenu.getEasyuiMultistageTree(menuFun, style));
 			sb.append("</div>");
 		}
-		if(style.equals("bootstrap"))
-		{
+		if(style.equals("bootstrap")){
 			sb.append(ListtoMenu.getBootMenu(parentFun, childFun));
 		}
-		if(style.equals("json"))
-		{
+		if(style.equals("json")){
 			sb.append("<script type=\"text/javascript\">");
 			sb.append("var _menus="+ListtoMenu.getMenu(parentFun, childFun));
 			sb.append("</script>");
 		}
-		if(style.equals("june_bootstrap"))
-		{
+		if(style.equals("june_bootstrap")){
 			sb.append(ListtoMenu.getBootstrapMenu(menuFun));
 		}
-		if(style.equals("ace"))
-		{
+		if(style.equals("ace")){
 			sb.append(ListtoMenu.getAceMultistageTree(menuFun));
 		}
-		if(style.equals("diy"))
-		{
+		if(style.equals("diy")){
 			sb.append(ListtoMenu.getDIYMultistageTree(menuFun));
 		}
 		if(style.equals("hplus")){

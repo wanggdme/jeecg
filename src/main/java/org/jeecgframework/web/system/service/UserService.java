@@ -10,6 +10,11 @@ import org.jeecgframework.web.system.pojo.base.TSUser;
  */
 public interface UserService extends CommonService{
 
+	/**
+	 * 根据用户名和密码查询用户信息
+	 * @param user
+	 * @return
+	 */
 	public TSUser checkUserExits(TSUser user);
 	public String getUserRole(TSUser user);
 	public void pwdInit(TSUser user, String newPwd);

@@ -15,7 +15,7 @@ import org.jeecgframework.core.enums.SysThemesEnum;
 public class SysThemesUtil {
 	
 	/**
-	 * 获取系统风格
+	 * 获取系统风格,如果cookie中没有，则获取默认值
 	 * @param request
 	 * @return
 	 */

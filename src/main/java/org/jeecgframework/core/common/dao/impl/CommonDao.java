@@ -56,7 +56,7 @@ public class CommonDao extends GenericBaseCommonDao implements ICommonDao, IGene
 
 		if (users != null && users.size() > 0) {
 			return users.get(0);
-		} else {
+		} /*else { //谁写的烂代码
 			queryObject = getSession().createQuery(query);
 			queryObject.setParameter("username", user.getUserName());
 			queryObject.setParameter("passowrd", user.getPassword());
@@ -64,7 +64,7 @@ public class CommonDao extends GenericBaseCommonDao implements ICommonDao, IGene
 			if(users != null && users.size() > 0){
 				return users.get(0);
 			}
-		}
+		}*/
 		return null;
 	}
 	
