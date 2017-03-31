@@ -6,13 +6,13 @@
 <t:datagrid name="roleList" title="common.role.list" actionUrl="roleController.do?roleGrid" 
     idField="id" sortName="createDate" sortOrder="desc">
 	<t:dgCol title="common.code" field="id" hidden="true"></t:dgCol>
-	<t:dgCol title="common.role.code" field="roleCode"></t:dgCol>
-	<t:dgCol title="common.role.name" field="roleName" query="true"></t:dgCol>
+	<t:dgCol title="common.role.code"  width="15" align="center" field="roleCode"></t:dgCol>
+	<t:dgCol title="common.role.name" width="15" align="center" field="roleName" query="true"></t:dgCol>
 	<t:dgCol title="common.createby" field="createBy" hidden="true"></t:dgCol>
 	<t:dgCol title="common.createtime" field="createDate" formatter="yyyy-MM-dd" hidden="true"></t:dgCol>
 	<t:dgCol title="common.updateby" field="updateBy" hidden="true"></t:dgCol>
 	<t:dgCol title="common.updatetime" field="updateDate" formatter="yyyy-MM-dd" hidden="true"></t:dgCol>
-	<t:dgCol title="common.operation" field="opt"></t:dgCol>
+	<t:dgCol title="common.operation" width="15" align="center" field="opt"></t:dgCol>
 	<t:dgFunOpt funname="delRole(id)" title="common.delete" urlclass="ace_button"  urlfont="fa-trash-o"></t:dgFunOpt>
 	<t:dgFunOpt funname="userListbyrole(id,roleName)" title="common.user" urlclass="ace_button"  urlfont="fa-user"></t:dgFunOpt>
 	<t:dgFunOpt funname="setfunbyrole(id,roleName)" title="permission.set" urlclass="ace_button"  urlfont="fa-cog"></t:dgFunOpt>

@@ -101,9 +101,9 @@ function typeGridTree_UpdateType() {
         <t:datagrid name="typeGridTree" title="common.data.dictionary" actionUrl="systemController.do?typeGroupGrid" 
         idField="id" treegrid="false" pagination="false"  sortOrder="desc" sortName="createDate" onLoadSuccess="loadSuccess">
             <t:dgCol title="common.code" field="id" hidden="true"></t:dgCol>
-            <t:dgCol title="dict.name" field="typegroupname" width="100" query="true"></t:dgCol>
-            <t:dgCol title="dict.code" field="typegroupcode" width="100" treefield="code"></t:dgCol>
-            <t:dgCol title="common.operation" field="opt" width="100"></t:dgCol>
+            <t:dgCol title="dict.name" align="center" field="typegroupname" width="100" query="true"></t:dgCol>
+            <t:dgCol title="dict.code" align="center" field="typegroupcode" width="100" treefield="code"></t:dgCol>
+            <t:dgCol title="common.operation" align="center" field="opt" width="100"></t:dgCol>
             <t:dgDelOpt url="systemController.do?delTypeGroup&id={id}" title="common.delete" urlclass="ace_button"  urlfont="fa-trash-o"></t:dgDelOpt>
             <t:dgFunOpt funname="queryTypeValue(id,typegroupname)" title="common.type.view" urlclass="ace_button"  urlfont="fa-search"></t:dgFunOpt>
             <t:dgToolBar title="common.add.param" langArg="lang.dictionary.type" icon="icon-add" url="systemController.do?aouTypeGroup" funname="add"></t:dgToolBar>

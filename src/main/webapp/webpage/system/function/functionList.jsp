@@ -6,13 +6,13 @@
 <div region="center" style="padding:0px;border:0px">
 	<t:datagrid name="functionList" title="menu.manage" actionUrl="functionController.do?functionGrid" idField="id" treegrid="true" pagination="false">
         <t:dgCol title="common.id" field="id" treefield="id" hidden="true"></t:dgCol>
-        <t:dgCol title="menu.name" field="functionName" treefield="text"></t:dgCol>
-        <t:dgCol title="common.icon" field="TSIcon_iconPath" treefield="code" image="true"></t:dgCol>
-        <t:dgCol title="funcType" field="functionType" treefield="functionType" replace="funcType.page_0,funcType.from_1"></t:dgCol>
-        <t:dgCol title="menu.url" field="functionUrl" treefield="src"></t:dgCol>
-        <t:dgCol title="menu.order" field="functionOrder" treefield="order"></t:dgCol>
-        <t:dgCol title="menu.funiconstyle" field="functionIconStyle" treefield="iconStyle"></t:dgCol>
-        <t:dgCol title="common.operation" field="opt" width="100"></t:dgCol>
+        <t:dgCol title="menu.name" width="55" align="center"  field="functionName" treefield="text"></t:dgCol>
+        <t:dgCol title="common.icon" width="25" align="center" field="TSIcon_iconPath" treefield="code" image="true"></t:dgCol>
+        <t:dgCol title="funcType" width="25" align="center" field="functionType" treefield="functionType" replace="funcType.page_0,funcType.from_1"></t:dgCol>
+        <t:dgCol title="menu.url" width="90" align="center" field="functionUrl" treefield="src"></t:dgCol>
+        <t:dgCol title="menu.order" width="20" align="center" field="functionOrder" treefield="order"></t:dgCol>
+        <t:dgCol title="menu.funiconstyle" width="30" align="center" field="functionIconStyle" treefield="iconStyle"></t:dgCol>
+        <t:dgCol title="common.operation" width="70" align="center" field="opt" ></t:dgCol>
         <t:dgDelOpt url="functionController.do?del&id={id}" title="common.delete" urlclass="ace_button"  urlfont="fa-trash-o"></t:dgDelOpt>
         <t:dgFunOpt funname="operationDetail(id)" title="button.setting" urlclass="ace_button"  urlfont="fa-cog"></t:dgFunOpt>
         <t:dgFunOpt funname="operationData(id)" title="数据规则" urlclass="ace_button"  urlfont="fa-database"></t:dgFunOpt>

@@ -4,19 +4,19 @@
 <div id="main_depart_list" class="easyui-layout" fit="true">
     <div region="center" style="padding:0px;border:0px">
         <t:datagrid name="departList" title="common.department.list" actionUrl="departController.do?departgrid" treegrid="true" idField="departid" pagination="false">
-            <t:dgCol title="common.id" field="id" treefield="id" hidden="true"></t:dgCol>
-            <t:dgCol title="common.department.name" field="departname" treefield="text"></t:dgCol>
-            <t:dgCol title="position.desc" field="description" treefield="src"></t:dgCol>
-            <t:dgCol title="common.org.code" field="orgCode" treefield="fieldMap.orgCode"></t:dgCol>
-            <t:dgCol title="common.org.type" field="orgType" dictionary="orgtype" treefield="fieldMap.orgType"></t:dgCol>
-            <t:dgCol title="common.mobile" field="mobile" treefield="fieldMap.mobile"></t:dgCol>
-            <t:dgCol title="common.fax" field="fax" treefield="fieldMap.fax"></t:dgCol>
-            <t:dgCol title="common.address" field="address" treefield="fieldMap.address"></t:dgCol>
-            <t:dgCol title="顺序" field="departOrder" treefield="fieldMap.order"></t:dgCol>
+            <t:dgCol title="common.id"  field="id" treefield="id" hidden="true"></t:dgCol>
+            <t:dgCol title="common.department.name" width="60" align="center" field="departname" treefield="text"></t:dgCol>
+            <t:dgCol title="position.desc" field="description" width="45" align="center" treefield="src"></t:dgCol>
+            <t:dgCol title="common.org.code" field="orgCode" width="35" align="center" treefield="fieldMap.orgCode"></t:dgCol>
+            <t:dgCol title="common.org.type" field="orgType" width="35" align="center" dictionary="orgtype" treefield="fieldMap.orgType"></t:dgCol>
+            <t:dgCol title="common.mobile" field="mobile" width="40" align="center" treefield="fieldMap.mobile"></t:dgCol>
+            <t:dgCol title="common.fax" field="fax" width="40" align="center" treefield="fieldMap.fax"></t:dgCol>
+            <t:dgCol title="common.address" field="address" width="90" align="center" treefield="fieldMap.address"></t:dgCol>
+            <t:dgCol title="顺序" width="15" align="center" field="departOrder" treefield="fieldMap.order"></t:dgCol>
             <t:dgCol title="common.operation" field="opt"></t:dgCol>
             <t:dgDelOpt url="departController.do?del&id={id}" title="common.delete" urlclass="ace_button"  urlfont="fa-trash-o"></t:dgDelOpt>
             <t:dgFunOpt funname="queryUsersByDepart(id)" title="view.member" urlclass="ace_button"  urlfont="fa-user"></t:dgFunOpt>
-            <t:dgFunOpt funname="setRoleByDepart(id,text)" title="role.set" urlclass="ace_button"  urlfont="fa-cog"></t:dgFunOpt>
+            <t:dgFunOpt funname="setRoleByDepart(id,text)"  title="role.set" urlclass="ace_button"  urlfont="fa-cog"></t:dgFunOpt>
         </t:datagrid>
         <div id="departListtb" style="padding: 3px; height: 25px">
             <div style="float: left;">

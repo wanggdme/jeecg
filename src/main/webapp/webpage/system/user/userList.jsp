@@ -4,18 +4,18 @@
 
 <t:datagrid name="userList" title="common.operation" actionUrl="userController.do?datagrid" fit="true" fitColumns="true" idField="id" queryMode="group" sortName="id" sortOrder="desc">
 	<t:dgCol title="common.id" field="id" hidden="true"></t:dgCol>
-	<t:dgCol title="common.username" sortable="false" field="userName" query="true"></t:dgCol>
+	<t:dgCol title="common.username" width="55" align="center" sortable="false" field="userName" query="true"></t:dgCol>
 	<%--<t:dgCol title="common.department" field="TSDepart_id" query="true" replace="${departsReplace}"></t:dgCol>--%>
-	<t:dgCol title="common.department" sortable="false" field="userOrgList.tsDepart.departname" query="false"></t:dgCol>
-	<t:dgCol title="common.real.name" field="realName" query="false"></t:dgCol>
-	<t:dgCol title="common.role" field="userKey" ></t:dgCol>
+	<t:dgCol title="common.department" width="100" align="center" sortable="false" field="userOrgList.tsDepart.departname" query="false"></t:dgCol>
+	<t:dgCol title="common.real.name" width="60" align="center" field="realName" query="false"></t:dgCol>
+	<t:dgCol title="common.role" width="60" align="center" field="userKey" ></t:dgCol>
 	<t:dgCol title="common.createby" field="createBy" hidden="true"></t:dgCol>
 	<t:dgCol title="common.createtime" field="createDate" formatter="yyyy-MM-dd" hidden="true"></t:dgCol>
 	<t:dgCol title="common.updateby" field="updateBy" hidden="true"></t:dgCol>
 	<t:dgCol title="common.updatetime" field="updateDate" formatter="yyyy-MM-dd" hidden="true"></t:dgCol>
-	<t:dgCol title="common.status" sortable="true" field="status" replace="common.active_1,common.inactive_0,super.admin_-1" ></t:dgCol>
+	<t:dgCol title="common.status"  width="50" align="center" sortable="true" field="status" replace="common.active_1,common.inactive_0,super.admin_-1" ></t:dgCol>
 	
-	<t:dgCol title="common.operation" field="opt" width="100"></t:dgCol>
+	<t:dgCol title="common.operation" field="opt" width="50" align="center"></t:dgCol>
 	<t:dgFunOpt funname="deleteDialog(id)" title="common.delete" urlclass="ace_button"  urlfont="fa-trash-o"></t:dgFunOpt>
 	<t:dgToolBar title="common.add.param" langArg="common.user" icon="icon-add" url="userController.do?addorupdate" funname="add"></t:dgToolBar>
 	<t:dgToolBar title="common.edit.param" langArg="common.user" icon="icon-edit" url="userController.do?addorupdate" funname="update"></t:dgToolBar>
@@ -105,10 +105,7 @@ function lockuploadify(url, id) {
 	});
 }
 </script>
-<%--<a href="#" class="easyui-linkbutton" plain="true" icon="icon-search" onClick="choose_297e201048183a730148183ad85c0001()">选择</a>--%>
-<%--<a href="#" class="easyui-linkbutton" plain="true" icon="icon-redo" onClick="clearAll_297e201048183a730148183ad85c0001();">清空</a>--%>
 <script type="text/javascript">
-//    var windowapi = frameElement.api, W = windowapi.opener;
     function choose_297e201048183a730148183ad85c0001() {
         if (typeof(windowapi) == 'undefined') {
             $.dialog({content: 'url:departController.do?departSelect', zIndex: 2100, title: '<t:mutiLang langKey="common.department.list"/>', lock: true, width: 400, height: 350, opacity: 0.4, button: [

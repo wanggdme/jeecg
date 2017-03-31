@@ -5,12 +5,12 @@
   <div region="center" style="padding:1px;">
   <t:datagrid name="tSNoticeList" checkbox="true" fitColumns="false" title="common.notice" actionUrl="noticeController.do?datagrid2" idField="id" fit="true" queryMode="group">
    <t:dgCol title="ID"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="通知标题"  field="noticeTitle"  hidden="false"  queryMode="group"  width="320"></t:dgCol>
+   <t:dgCol title="通知标题"  field="noticeTitle"  hidden="false"  queryMode="group"  width="720"></t:dgCol>
    <%-- <t:dgCol title="通知公告内容"  field="noticeContent"  hidden="true"  queryMode="group"  width="120"></t:dgCol> --%>
-   <t:dgCol title="common.type.name"  field="noticeType"  hidden="false"  queryMode="group"  width="60" replace="通知_1,公告_2"></t:dgCol>
-   <t:dgCol title="授权级别"  field="noticeLevel"  hidden="false"  queryMode="group"  width="100" replace="全员_1,角色授权_2,用户授权_3"></t:dgCol>
-   <t:dgCol title="阅读期限"  field="noticeTerm" formatter="yyyy-MM-dd" hidden="false"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="common.operation" field="opt" width="120"></t:dgCol>
+   <t:dgCol title="common.type.name"  field="noticeType"  hidden="false"  queryMode="group" align="center" width="190" replace="通知_1,公告_2"></t:dgCol>
+   <t:dgCol title="授权级别"  field="noticeLevel"  hidden="false"  queryMode="group"  align="center" width="230" replace="全员_1,角色授权_2,用户授权_3"></t:dgCol>
+   <t:dgCol title="阅读期限"  field="noticeTerm" formatter="yyyy-MM-dd" hidden="false" align="center" queryMode="group"  width="270"></t:dgCol>
+   <t:dgCol title="common.operation" field="opt" width="175"></t:dgCol>
    <t:dgDelOpt title="common.delete" url="noticeController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
    <t:dgToolBar title="common.add" icon="icon-add" url="noticeController.do?goAdd" funname="add" width="800" height="600"></t:dgToolBar>
    <t:dgToolBar title="common.edit" icon="icon-edit" url="noticeController.do?goUpdate" funname="update" width="800" height="600"></t:dgToolBar>
